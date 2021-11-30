@@ -1,10 +1,12 @@
 import requests
 import os
+import fileinput
+
 from dotenv import load_dotenv
 
+from download import download_input
 
-def iter_inp(day, year=2021):
-    yield from iter_lines(puzzle_input(day, year))
+YEAR = 2021
 
 
 def iter_lines(inp):
@@ -13,8 +15,18 @@ def iter_lines(inp):
             yield line
 
 
-def puzzle_input(day, year=2021):
-    url = f"https://adventofcode.com/{year}/day/{day}/input"
-    load_dotenv()
-    r = requests.get(url, cookies={"session": os.getenv("COOKIE")})
-    return r.content.decode("utf-8")
+def iter_file(day, year=YEAR):
+    fname = f"data/{str(day).zfill(2)}.in"
+    if not os.path.exists(fname):
+        download_input(day, year)
+    with fileinput.input(fname) as f:
+        for line in f:
+            yield line.strip()
+
+
+def rinput(day, year=YEAR):
+    fname = f"data/{str(day).zfill(2)}.in"
+    if not os.path.exists(fname):
+        download_input(day, year)
+    with open(fname, "r") as f:
+        return f.read()
