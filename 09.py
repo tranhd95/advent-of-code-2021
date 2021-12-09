@@ -1,7 +1,7 @@
-from utils import iter_lines, rinput
 from collections import defaultdict
 from math import prod
-from itertools import product
+
+from utils import iter_lines, rinput
 
 
 def parse(inp):
