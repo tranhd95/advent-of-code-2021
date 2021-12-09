@@ -12,17 +12,13 @@ def parse(inp):
     return dct
 
 
-def neighbourhood(hmap, coords):
-    x, y = coords
-    yield (x, y - 1), hmap[(x, y - 1)]
-    yield (x, y + 1), hmap[(x, y + 1)]
-    yield (x - 1, y), hmap[(x - 1, y)]
-    yield (x + 1, y), hmap[(x + 1, y)]
+def neighbourhood(x, y):
+    yield from ((x, y - 1), (x, y + 1), (x - 1, y), (x + 1, y))
 
 
 def get_low_points(hmap):
     for coords, cell_height in hmap.copy().items():
-        if all(cell_height < neighbour for _, neighbour in neighbourhood(hmap, coords)):
+        if all(cell_height < hmap[adj] for adj in neighbourhood(*coords)):
             yield coords, cell_height
 
 
@@ -41,10 +37,10 @@ def flood(hmap, base):
     basin = {base}
     while q:
         x, y = q.pop(0)
-        for ncoords, nval in neighbourhood(hmap, (x, y)):
-            if nval < 9 and ncoords not in basin:
-                q.append(ncoords)
-                basin.add(ncoords)
+        for adj in neighbourhood(x, y):
+            if hmap[adj] < 9 and adj not in basin:
+                q.append(adj)
+                basin.add(adj)
     return len(basin)
 
 
