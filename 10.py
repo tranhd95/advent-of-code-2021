@@ -17,8 +17,7 @@ def solve1(lines):
             if ch in left:
                 s.append(ch)
             else:
-                curr = s.pop()
-                if pairs[curr] != ch:
+                if pairs[s.pop()] != ch:
                     error_score += table[ch]
     return error_score
 
@@ -26,7 +25,7 @@ def solve1(lines):
 def solve2(lines):
     scores = []
     table = dict(zip(left, range(1, 5)))
-    for i, line in enumerate(lines):
+    for line in lines:
         s = []
         for ch in line:
             if ch in left:
