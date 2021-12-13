@@ -21,8 +21,8 @@ def fold(points, axis, along):
         right = [[x for x in reversed(row[along + 1 :])] for row in points]
         return merge(left, right)
     else:
-        top = [[x for x in row] for row in points[:along]]
-        bot = [[x for x in row] for row in reversed(points[along + 1 :])]
+        top = [row for row in points[:along]]
+        bot = [row for row in reversed(points[along + 1 :])]
         return merge(top, bot)
 
 
