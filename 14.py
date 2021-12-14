@@ -19,12 +19,11 @@ def solve(inp, steps):
     pairs_cnt = Counter(pairwise(template))
     for _ in range(steps):
         polymerization = Counter()
-        for pair in rules:
-            left, right = pair
-            to = rules[pair]
-            polymerization[(left, to)] += pairs_cnt[pair]
-            polymerization[(to, right)] += pairs_cnt[pair]
-            letters_cnt[to] += pairs_cnt[pair]
+        for (left, right), to in rules:
+            num_pairs = pairs_cnt[(left, right)]
+            polymerization[(left, to)] += num_pairs
+            polymerization[(to, right)] += num_pairs
+            letters_cnt[to] += num_pairs
         pairs_cnt = polymerization
     most_common = letters_cnt.most_common()
     return most_common[0][1] - most_common[-1][1]
