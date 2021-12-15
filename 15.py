@@ -20,7 +20,6 @@ def neighbourhood(x, y):
 
 def cheapest_path(graph, start, end):
     dist = {start: 0}
-    parent = {start: None}
     pq = [(0, start)]
     seen = set()
     while pq:
@@ -36,7 +35,6 @@ def cheapest_path(graph, start, end):
             risk_level = graph[v]
             if v not in dist or dist[v] > du + risk_level:
                 dist[v] = du + risk_level
-                parent[v] = u
                 heappush(pq, (dist[v], v))
     return dist[end]
 
