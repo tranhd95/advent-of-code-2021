@@ -70,12 +70,9 @@ def preorder(node):
 
 
 def reduce(root):
-    while True:
-        if explodable := first(preorder(root), is_explodable):
+    while explodable := first(preorder(root), is_explodable):
             explodable.explode(root)
-        else:
-            break
-
+            
     if splittable := first(preorder(root), is_splitable):
         splittable.split()
         reduce(root)
